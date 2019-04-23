@@ -23,7 +23,7 @@ void AInteractable::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
-void AInteractable::Interact(){
+void AInteractable::Interact_Implementation(){
     
 }
 
