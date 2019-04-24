@@ -22,9 +22,5 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	//UFunction didn't play well with the virtual keyword :
-    UFUNCTION(BlueprintNativeEvent)
-    //virtual void Interact();
-    void Interact();
 
 };
