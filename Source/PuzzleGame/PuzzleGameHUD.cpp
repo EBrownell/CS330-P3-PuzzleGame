@@ -60,6 +60,8 @@ void APuzzleGameHUD::DrawHUD()
 	// draw a text on canvas
 	if (num < 1) {
 		Clock = GetWorld()->SpawnActor<AWorldClock>(GetActorLocation(), GetActorRotation());
+
+		Clock = GetWorld()->clock
 		num++;
 	}
 	FText TimerText = FText::FromString(Clock->GetTimerText());
