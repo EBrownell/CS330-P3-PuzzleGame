@@ -15,6 +15,8 @@ AWorldClock::AWorldClock()
 //	RootComponent = CountdownText;
 	CountdownTime = 1;
 	seconds = 0;
+
+	bool endTimer = false;
 }
 
 // Called when the game starts or when spawned
@@ -22,8 +24,9 @@ void AWorldClock::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	UpdateTimerDisplay();
+	//UpdateTimerDisplay();
 	GetWorldTimerManager().SetTimer(CountdownTimerHandle, this, &AWorldClock::AdvanceTimer, 1.0f, true);
+
 }
 
 // Called every frame
@@ -97,13 +100,14 @@ void AWorldClock::AdvanceTimer()
 		seconds = 59;
 		--CountdownTime;
 	}
-	UpdateTimerDisplay();
+	//UpdateTimerDisplay();
 	if (CountdownTime < 0)
 	{
+		endTimer = true;
 		// We're done counting down, so stop running the timer.
 		GetWorldTimerManager().ClearTimer(CountdownTimerHandle);
 		//Perform any special actions we want to do when the timer ends.
-		CountdownHasFinished();
+		//CountdownHasFinished();
 	}
 }
 
@@ -118,3 +122,28 @@ void AWorldClock::CountdownHasFinished()
 	}
 }
 
+FString AWorldClock::GetTimerText()
+{
+	static const FString TimerText(TEXT("Time: "));
+	if (CountdownTime < 10) {
+		if (seconds < 10) {
+			return TimerText + "0" + FString::FromInt(CountdownTime) + ":0" + FString::FromInt(seconds);
+		}
+		else {
+			return TimerText + "0" + FString::FromInt(CountdownTime) + ":" + FString::FromInt(seconds);
+		}
+	}
+	else {
+		if (seconds < 10) {
+			return TimerText + FString::FromInt(CountdownTime) + ":0" + FString::FromInt(seconds);
+		}
+		else {
+			return TimerText + FString::FromInt(CountdownTime) + ":" + FString::FromInt(seconds);
+		}
+	}
+}
+
+bool AWorldClock::EndOfTimer()
+{
+	return endTimer;
+}

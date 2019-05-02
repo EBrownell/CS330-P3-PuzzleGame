@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
+#include "WorldClock.h"
 #include "PuzzleGameHUD.generated.h"
 
 UCLASS()
@@ -20,6 +21,15 @@ public:
 private:
 	/** Crosshair asset pointer */
 	class UTexture2D* CrosshairTex;
+
+	UFont* Font;
+	AWorldClock *Clock;
+	int32 num;
+	FString instructions[15];
+	int32 i;
+	FString TextInput;
+	int32 timer;
+	bool TimerOn;
 
 };
 

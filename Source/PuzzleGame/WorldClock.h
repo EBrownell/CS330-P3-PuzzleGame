@@ -35,4 +35,7 @@ public:
 	void AdvanceTimer();
 	void CountdownHasFinished();
 	FTimerHandle CountdownTimerHandle;
+	FString GetTimerText();
+	bool EndOfTimer();
+	bool endTimer;
 };
