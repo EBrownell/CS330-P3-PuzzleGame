@@ -3,22 +3,32 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "CipherGenner.generated.h"
 
-/**
- * 
- */
-class PUZZLEGAME_API CipherGenner
+UCLASS()
+class PUZZLEGAME_API ACipherGenner : public AActor
 {
-public:
-	CipherGenner();
-	~CipherGenner();
-    //currently the code is set to 4 parts
-    int32 GetCode();
-    int32 GetCodePart(int32 n);
-    //LookIntoFTexture2d
-    //int** GetImage();
-    //int** GetImagePart(int32 n);
-private:
-    int32 Code;
-    //int** POIDH;
+	GENERATED_BODY()
+	
+public:	
+	// Sets default values for this actor's properties
+	ACipherGenner();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+	UFUNCTION(BlueprintCallable)
+	FString getCode();
+	UFUNCTION(BlueprintCallable)
+	int getCodePart(int n);
+	UFUNCTION(BlueprintCallable)
+		int getCodeLen();
+	int CodeLen;
+	FString Code;
+
 };

@@ -30,6 +30,7 @@ private:
 	FString TextInput;
 	int32 timer;
 	bool TimerOn;
+	float alphaa;
 
 };
 

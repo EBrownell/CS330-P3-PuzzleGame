@@ -36,6 +36,7 @@ APuzzleGameHUD::APuzzleGameHUD()
 	TextInput = "";
 	timer = 0;
 	TimerOn = true;
+	alphaa = 1.0f;
 }
 
 
@@ -92,18 +93,23 @@ void APuzzleGameHUD::DrawHUD()
 			TimerOn = false;
 		}
 	}
+	else if (i >= 15) {
+		++i;
+		alphaa = FMath::Clamp<float>(alphaa - .01f, 0, 100);
+	}
 	if (TimerOn) {
 		timer++;
 	}
 
 	FText InstructionText = FText::FromString(TextInput);
-	FLinearColor InstructionFontColour = FLinearColor(100.0f, 100.0f, 100.0f);
+	FLinearColor InstructionFontColour = FLinearColor(100.0f, 100.0f, 100.0f, alphaa);
 	FCanvasTextItem Text3(FVector2D(500.0f, 50.0f), InstructionText, Font, InstructionFontColour);
 
 	//Text Scale
 	Text3.Scale.Set(1.25f, 1.25f);
 
 	//draw text
+
 	Canvas->DrawItem(Text3);
 
 	// draw control instructions
