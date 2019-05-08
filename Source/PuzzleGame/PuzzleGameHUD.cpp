@@ -39,7 +39,6 @@ APuzzleGameHUD::APuzzleGameHUD()
 	alphaa = 1.0f;
 }
 
-
 void APuzzleGameHUD::DrawHUD()
 {
 	Super::DrawHUD();
@@ -58,6 +57,77 @@ void APuzzleGameHUD::DrawHUD()
 	TileItem.BlendMode = SE_BLEND_Translucent;
 	Canvas->DrawItem( TileItem );
 
+
+	for (TObjectIterator<AWorldClock> Itr; Itr; ++Itr)
+	{
+		if (Itr->GetName() == "WorldClock_1") {
+			if (GetWorld())
+			{
+				UGameViewportClient* Viewport = GetWorld()->GetGameViewport();
+				FIntPoint ViewSize = Viewport->Viewport->GetSizeXY();
+				const FVector2D ViewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
+				const FVector2D  ViewportCenter = FVector2D(ViewportSize.X / 2, ViewportSize.Y / 2);
+				/*if (GEngine)
+				 {
+					GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Green, FString::Printf(TEXT("Object Found!, %s"), *Itr->GetTimerText()));
+				 }*/
+				FText TimerText = FText::FromString(Itr->GetTimerText());
+				//FLinearColor TimerFontColour = FLinearColor(1.0f, 1.0f, 1.0f);
+				FCanvasTextItem Text1(FVector2D(ViewSize.X / 16, ViewSize.Y / 16), TimerText, Font, FLinearColor::Green);
+
+				FText GameOverText = FText::FromString("Game Over!");
+				//FLinearColor GameOverFontColour = FLinearColor(10.0f, 10.0f, 10.0f);
+				FCanvasTextItem Text2(FVector2D(ViewSize.X / 2 - 300.0f, ViewSize.Y / 2), GameOverText, Font, FLinearColor::Red);
+
+				Text1.Scale.Set(2.5f, 2.5f);
+				//Text1.Scale.Set(ViewSize.X/16, ViewSize.Y/16);
+
+				Text2.Scale.Set(5.0f, 5.0f);
+
+				//draw text
+				if (Itr->EndOfTimer()) {
+					Canvas->DrawItem(Text2);
+				}
+				else {
+					Canvas->DrawItem(Text1);
+				}
+
+				// draw instructions
+				if (i < 15 && timer % 4 == 0) {
+					TextInput += instructions[i];
+					i++;
+					if (i >= 15) {
+						TimerOn = false;
+					}
+				}
+				if (TimerOn) {
+					timer++;
+				}
+
+				FText InstructionText = FText::FromString(TextInput);
+				//FLinearColor InstructionFontColour = FLinearColor(100.0f, 100.0f, 100.0f);
+				FCanvasTextItem Text3(FVector2D(ViewSize.X / 2 - 200.0f, ViewSize.Y / 16), InstructionText, Font, FLinearColor::Yellow);
+
+				Text3.Scale.Set(1.25f, 1.25f);
+
+				Canvas->DrawItem(Text3);
+
+				FText ControlText = FText::FromString("Press E to interact with objects.");
+				//FLinearColor ControlFontColour = FLinearColor(1000.0f, 1000.0f, 1000.0f);
+				FCanvasTextItem Text4(FVector2D(ViewSize.X / 2 - 150.0f, ViewSize.Y * 15 / 16), ControlText, Font, FLinearColor::Blue);
+
+				Text4.Scale.Set(1.25f, 1.25f);
+
+				Canvas->DrawItem(Text4);
+			}
+		}
+	}
+
+
+
+
+
+/*
 	// draw a text on canvas
 	if (num < 1) {
 		Clock = GetWorld()->SpawnActor<AWorldClock>(GetActorLocation(), GetActorRotation());
@@ -123,4 +193,6 @@ void APuzzleGameHUD::DrawHUD()
 	//draw text
 	Canvas->DrawItem(Text4);
 
+
+*/
 }
