@@ -47,10 +47,10 @@ void AInstructionClass::Tick(float DeltaTime)
 	}
 	if (!TimerOn) {
 		activateTimer++;
-		if (activateTimer >= 8) {
+		if (activateTimer >= 8) {	// 8
 			ControlText = "";
 		}
-		if (activateTimer >= 12) {
+		if (activateTimer >= 150) {	// 12
 			TimerOn = true;
 			TextInput = "";
 			activateTimer = 0;
