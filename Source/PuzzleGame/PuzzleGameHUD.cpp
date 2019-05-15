@@ -37,6 +37,7 @@ APuzzleGameHUD::APuzzleGameHUD()
 	timer = 0;
 	TimerOn = true;
 	alphaa = 1.0f;
+	Instruction = "What are you doing in bed so late?\n Find the key to the door.";
 }
 
 void APuzzleGameHUD::DrawHUD()
@@ -57,6 +58,40 @@ void APuzzleGameHUD::DrawHUD()
 	TileItem.BlendMode = SE_BLEND_Translucent;
 	Canvas->DrawItem( TileItem );
 
+
+	for (TObjectIterator<AInstructionClass> Itr; Itr; ++Itr)
+	{
+		if (Itr->GetName() == "InstructionClass_1") {
+			/*if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Green, FString::Printf(TEXT("%s"),*Itr->getInstructions()));
+			}*/
+			UGameViewportClient* Viewport = GetWorld()->GetGameViewport();
+			FIntPoint ViewSize = Viewport->Viewport->GetSizeXY();
+			const FVector2D ViewportSize = FVector2D(GEngine->GameViewport->Viewport->GetSizeXY());
+			const FVector2D  ViewportCenter = FVector2D(ViewportSize.X / 2, ViewportSize.Y / 2);
+			FText InstructionText = FText::FromString(Itr->getInstructions());
+			FCanvasTextItem Text3(FVector2D(ViewSize.X / 2 - 200.0f, ViewSize.Y / 16), InstructionText, Font, FLinearColor::Yellow);
+
+			Text3.Scale.Set(1.25f, 1.25f);
+
+			Canvas->DrawItem(Text3);
+
+			FText ControlText = FText::FromString(Itr->getControlText());
+			//FLinearColor ControlFontColour = FLinearColor(1000.0f, 1000.0f, 1000.0f);
+			FCanvasTextItem Text4(FVector2D(ViewSize.X / 2 - 150.0f, ViewSize.Y * 15 / 16), ControlText, Font, FLinearColor::Blue);
+
+			Text4.Scale.Set(1.25f, 1.25f);
+
+			Canvas->DrawItem(Text4);
+		}
+		else {
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(0, 5.f, FColor::Green, FString::Printf(TEXT("%s"), *Itr->GetName()));
+			}
+		}
+	}
 
 	for (TObjectIterator<AWorldClock> Itr; Itr; ++Itr)
 	{
@@ -104,25 +139,24 @@ void APuzzleGameHUD::DrawHUD()
 					timer++;
 				}
 
-				FText InstructionText = FText::FromString(TextInput);
+				/*FText InstructionText = FText::FromString(TextInput);
 				//FLinearColor InstructionFontColour = FLinearColor(100.0f, 100.0f, 100.0f);
 				FCanvasTextItem Text3(FVector2D(ViewSize.X / 2 - 200.0f, ViewSize.Y / 16), InstructionText, Font, FLinearColor::Yellow);
 
 				Text3.Scale.Set(1.25f, 1.25f);
 
-				Canvas->DrawItem(Text3);
+				Canvas->DrawItem(Text3);*/
 
-				FText ControlText = FText::FromString("Press E to interact with objects.");
+				/*FText ControlText = FText::FromString("Press E to interact with objects.");
 				//FLinearColor ControlFontColour = FLinearColor(1000.0f, 1000.0f, 1000.0f);
 				FCanvasTextItem Text4(FVector2D(ViewSize.X / 2 - 150.0f, ViewSize.Y * 15 / 16), ControlText, Font, FLinearColor::Blue);
 
 				Text4.Scale.Set(1.25f, 1.25f);
 
-				Canvas->DrawItem(Text4);
+				Canvas->DrawItem(Text4);*/
 			}
 		}
 	}
-
 
 
 

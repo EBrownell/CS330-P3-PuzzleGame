@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
 #include "WorldClock.h"
+#include "InstructionClass.h"
 #include "PuzzleGameHUD.generated.h"
 
 UCLASS()
@@ -17,6 +18,9 @@ public:
 
 	/** Primary draw call for the HUD */
 	virtual void DrawHUD() override;
+
+	UPROPERTY(EditAnywhere)
+		FString Instruction;
 
 private:
 	/** Crosshair asset pointer */
